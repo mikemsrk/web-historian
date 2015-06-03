@@ -8,9 +8,12 @@ exports.handleRequest = function (req, res) {
     if(req.url === '/'){
       res.end('/<input/');
     }
-    if(req.url === '/www.google.com'){
-      // matching content of the text file.
+    else if(req.url === '/www.google.com'){
       res.end('/google/');
+    }
+    else{
+      res.writeHead(404,"NOT FOUND",{'Content-Type': 'text/html'});
+      res.end();
     }
   }else if(req.method === 'POST'){
     res.writeHead(302, "OK", {'Content-Type': 'text/html'});
@@ -18,5 +21,5 @@ exports.handleRequest = function (req, res) {
     archive.addUrlToList(req._postData.url,res.end);
   }
 
-  res.end(archive.paths.list);
+  // res.end(archive.paths.list);
 };
