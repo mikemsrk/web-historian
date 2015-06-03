@@ -31,7 +31,11 @@ exports.readListOfUrls = function(){
 exports.isUrlInList = function(){
 };
 
-exports.addUrlToList = function(){
+exports.addUrlToList = function(url,cb){
+  fs.writeFile(this.paths.list, url + '\n', function(){
+    console.log("writeFile Path is, ", this.paths.list,  url);
+  });
+  cb();
 };
 
 exports.isURLArchived = function(){
