@@ -2,11 +2,22 @@
 <html>
 <head>
   <link rel="stylesheet" type="text/css" href="styles.css" />
+  <script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
 </head>
 <body>
   Enter a URL here:
   <form method="POST">
     <input type="input" name="url"></input>
   </form>
+  <script>
+
+  $('form').submit(function(e){
+    e.preventDefault();
+    var url = $('input').val();
+    console.log(url);
+    $('input').val('');
+  });
+
+  </script>
 </body>
 </html>

@@ -36,8 +36,7 @@ exports.isUrlInList = function(){
 };
 
 exports.addUrlToList = function(url,cb){
-  fs.writeFile(exports.paths.list, url + '\n', function(){
-  });
+  fs.writeFile(exports.paths.list, url + '\n');
   cb();
 };
 

@@ -1,14 +1,15 @@
 var path = require('path');
 var archive = require('../helpers/archive-helpers');
+var http = require('./http-helpers');
 // require more modules/folders here!
 
 exports.handleRequest = function (req, res) {
   if(req.method === 'GET'){
-    res.writeHead(200, "OK", {'Content-Type': 'text/html'});
-    if(req.url === '/'){
-      res.end('/<input/');
+    if(req.url === '/' || req.url === '/styles.css'){
+      http.serveAssets(res, req.url);
     }
     else if(req.url === '/www.google.com'){
+      res.writeHead(200, "OK", {'Content-Type': 'text/html'});
       res.end('/google/');
     }
     else{
