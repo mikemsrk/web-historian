@@ -32,7 +32,8 @@ exports.handleRequest = function (req, res) {
             res.end();
           }else{
           // else, continue to loading page.
-            console.log('FOUND IN LIST, BUT NOT ARCHIVED');
+            console.log('FOUND IN LIST, BUT NOT ARCHIVED - DOWNLOADING NOW');
+            archive.downloadUrls();
           }
         });
       }else{
