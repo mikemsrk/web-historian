@@ -24,7 +24,6 @@ exports.serveAssets = function(res, origin, asset, callback) {
 
   if(origin !== 'local'){
     console.log(archive.paths.archivedSites + asset + opt + '.html');
-    res.writeHead(302, {'Location': archive.paths.archivedSites + asset + opt + '.html'}, {'Content-Type': 'text/html'});
     fs.readFile(archive.paths.archivedSites + asset + opt + '.html',function read(err,data){
       res.write(data);
       res.end();

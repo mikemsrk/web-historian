@@ -16,6 +16,7 @@
     var url = $('input').val();
     $.post('http://127.0.0.1:8080/'+url).done(function(data){
       $('html').html(data);
+      console.log(data);
     });
     $('input').val('');
   });

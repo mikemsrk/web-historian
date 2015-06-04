@@ -7,15 +7,15 @@ exports.handleRequest = function (req, res) {
   if(req.method === 'GET'){
     if(req.url === '/' || req.url === '/styles.css' || req.url === '/loading.html'){
       http.serveAssets(res,'local',req.url);
-    }
-    else{
-      if(archive.isURLArchived(req.url),function(inArchive){
+    }else{
+      archive.isURLArchived(req.url,function(inArchive){
         if(inArchive){
-          http.serveAssets(res,'public',req.url);
+          http.serveAssets(res,'pub',req.url);
+        }else{
+          res.writeHead(404, "ERROR", {'Content-Type': 'text/html'});
+          res.end();
         }
       });
-      res.writeHead(404,"NOT FOUND",{'Content-Type': 'text/html'});
-      res.end();
     }
   }else if(req.method === 'POST'){
     res.writeHead(302, "OK", {'Content-Type': 'text/html'});
@@ -28,13 +28,13 @@ exports.handleRequest = function (req, res) {
           // if archived, serve the file.
           if(inArchive){
             console.log('FOUND IN ARCHIVE, SERVING PAGE');
-            http.serveAssets(res,'pub',req.url);
+            res.writeHead(302, {'Location': req.url}, {'Content-Type': 'text/html'});
+            res.end();
           }else{
           // else, continue to loading page.
             console.log('FOUND IN LIST, BUT NOT ARCHIVED');
           }
         });
-        res.end();
       }else{
         console.log('NOT FOUND, ADDING NEW URL');
         // give the loading page.
