@@ -37,11 +37,15 @@ exports.handleRequest = function (req, res) {
           }
         });
       }else{
-        console.log('NOT FOUND, ADDING NEW URL');
+        console.log('NOT FOUND, ADDING NEW URL AND DOWNLOADING');
         // give the loading page.
         res.writeHead(302, {'Location': '/loading.html'}, {'Content-Type': 'text/html'});
         // add to the list to download
-        archive.addUrlToList(req.url,res,0);
+        archive.addUrlToList(req.url,res,function(){
+          archive.downloadUrls(function(){
+            res.end();
+          });
+        });
       }
     });
   }

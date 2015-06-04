@@ -43,9 +43,9 @@ exports.isUrlInList = function(url,cb){
   });
 };
 
-exports.addUrlToList = function(url,res,id){
-  fs.appendFile(exports.paths.list, url + ', '+ id + '\n');
-  res.end();
+exports.addUrlToList = function(url,res,callback){
+  fs.appendFile(exports.paths.list, url + ', 0'+'\n');
+  callback();
 };
 
 exports.isURLArchived = function(url,cb){
@@ -62,7 +62,7 @@ exports.isURLArchived = function(url,cb){
   });
 };
 
-exports.downloadUrls = function(){
+exports.downloadUrls = function(callback){
   console.log('CHECKING ALL URLS FOR DOWNLOAD.....');
   // check the list of the urls
   exports.readListOfUrls(function(data){
@@ -79,13 +79,14 @@ exports.downloadUrls = function(){
         exports.downloadUrl(url,function(path,data){
           console.log('COMPLETED DOWNLOAD, ' + path + ' IS NOW ARCHIVED');
           temp.push(path + ', 1' + '\n');
-          fs.writeFile(exports.paths.list,temp.concat(archived).join("")); // rewrite the whoel file.
+          fs.writeFile(exports.paths.list,archived.concat(temp).join("\n")); // rewrite the whoel file.
           // create the html archive file
           exports.makeFile(path,data);
         });
       }
     }
   });
+  if(callback)callback();
 };
 
 exports.downloadUrl = function(url,callback){
