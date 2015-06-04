@@ -14,7 +14,9 @@
   $('form').submit(function(e){
     e.preventDefault();
     var url = $('input').val();
-    console.log(url);
+    $.post('http://127.0.0.1:8080/'+url).done(function(data){
+      $('html').html(data);
+    });
     $('input').val('');
   });
 
